@@ -32,14 +32,14 @@ One note which caused us some issues, when you call random.getrandbits(x), we di
 
 This, combined with the fact that we know the last 48 lines of the image are white pixels, means we can deduce the first 48*444 bits in the sequence, as the upper left pixel in each group in share 2 is `color0`, where:
 
-```
+```python
         color0 = 0 if flipped_coins[idx] else 255
         color1 = 255 if flipped_coins[idx] else 0
 ```
 
 This means we can reverse engineer the bitstream for the last 48 lines as:
 
-```
+```python
 bitstream = []
     for idx in range(48 * 444):
         i, j = idx//n + 444 - 48, idx % n
@@ -53,9 +53,9 @@ bitstream = []
 Now that we have these, we just need to reverse the order, and feed it into randcrack 32 bits at a time, and it can approximate the flipped_coins for the rest of the image.
 
 #### Code
-Our solution in python.
+Our solution in (slightly messy) python.
 
-```
+```python
 import qrcode  # https://github.com/lincolnloop/python-qrcode
 import random
 import os
