@@ -1,7 +1,10 @@
 # VSS
 *Solution and write-up, playing for [Kalmarunionen](https://capturetheflag.withgoogle.com/scoreboard/kalmarunionen). 
 
-We are given a python source file, and an 888x888 image which appears to be random noise. The challenge description suggests some kind of image based threshold scheme.
+We are given a python [source file](vss.py), and an 888x888 image which appears to be random noise. 
+![share2](share2.png)
+
+The challenge description suggests some kind of image based threshold scheme.
 
 ## TL;DR
 - Flag is encoded in a QR code, which is saved as an image
@@ -139,5 +142,9 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+The output image. Note the occasional incorrect pixels due to imperfect randomness simulation.
+
+![result](result3.png)
 
 Flag: `n1ctf{bf3724e3-c26b-4a63-9b4f-b33024b1db63}`
