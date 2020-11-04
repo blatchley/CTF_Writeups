@@ -78,7 +78,7 @@ Every time we reach the smallest element in index 0, we check if the list is sor
 
 The code for this exercise is pretty quick and dirty, i refined it a lot more for 4 and 5.
 
-A copy of the sorting functionality is below, for full script with my (very very ugly) networking code, see [the code](vegetables\sol3.py)
+A copy of the sorting functionality is below, for full script with my (very very ugly) networking code, see [the code](vegetables/sol3.py)
 
 ```python
 def rotationsort(arr):
@@ -122,7 +122,7 @@ This means if we get the `k`'th smallest element into the position `k` after the
 
 I also realised at this point that local computation was not at all the bottleneck, i made the logic simpler by removing indexes and actually rotating the array. This runs almost instantly and produces outputs of ~70k characters, which are easily under the server limit.
 
-sorting code below, see [code](vegetables\sol4.py) for full solution including very ugly network code.
+sorting code below, see [code](vegetables/sol4.py) for full solution including very ugly network code.
 ```python
 def switch(arr, p, q):
     arr[p], arr[q] = arr[q], arr[p]
