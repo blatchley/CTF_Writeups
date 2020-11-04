@@ -62,15 +62,20 @@ print(flag)
 ```
 
 ## Vegetables 1
+We have to sort an array of vegetables alphabetically, by giving a list of indexes, which the machine will then swap the elements at that and the next index for each number.
+
 Just connect to endpoint and manually work out the bubble sort solution, and send it.
 
 ## Vegetables 2
+Same as vegetable 1, but now the list of vegetables is ~200 long. Runtime limit of ~15s for local and server computation for the rest of these challenges.
+
+
 I manually coded a simple bubblesort algorithm, and each time the algorithm made a swap, i concatenated the swap index onto a solution string. Finally i sent that string back to the server once the list was sorted.
 
 I've lost the file i used for this, may readd later.
 
 ## Vegetables 3
-We can now only rotate and swap the elements at 0 and 1.
+We can now only rotate the array, (left shift everything onces with wraparound,) and swap the elements at position 0 and 1.
 
 The first thing to note here is we need some fixed point, so that we don't keep swapping forever. I sort the list and save the smallest element, and this will now be our fixed point. We now cycle through the list, swapping if the element in index 0 is bigger than the one in index 1, as long as the element in index 1 is NOT the smallest element.
 
@@ -112,7 +117,9 @@ def rotationsort(arr):
 ```
 
 ## Vegetables 4
-We can now only swap between indexes `i` and `j`. The first thing we note is that the array has a consistent length of 211, which is prime. This is important because this means we can reach any element from any other element, in `n` jumps of `k` rotations, where `k = j - i`. 
+We can now only rotate, and swap between indexes `i` and `j`, where `i` and `j` are random each time.
+
+The first thing we note is that the array has a consistent length of 211, which is prime. This is important because this means we can reach any element from any other element, in `n` jumps of `k` rotations, where `k = j - i`. 
 
 This follows from the fact that for a prime order group of order `N`, for any elements `a`, `b`, there exists a value `n` less than `N`, such that the congruence `a + n*k = b (mod N)` holds. This means we can move any element to any other position in a number of swaps less than 211.
 
