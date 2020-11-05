@@ -9,11 +9,8 @@ Writeups for some of the general skills challenges which I solved.
 Used a basic python script which invokes 7z to folders in a chain, deleting the extra zip files, until there was only the last layer left, which i could manually unzip and read flag.
 
 ```python
-import requests
 import subprocess
-import re
 import sys
-import time
 from random import randrange
 import os
 
