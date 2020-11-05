@@ -177,6 +177,80 @@ def rotationsort(arr, p1, p2):
 ```
 
 ## Vegetables 5
-trivial generalisation redacted due to boring admins
-boo
-hiss
+The key difference between vegetables 4 and 5 is that in 5, the number of vegetables is no longer prime. This means that the earlier congruence no longer holds, so if we keep swapping an element with one of the offsets, we get a cycle, and won't reach all positions. 
+
+The key observation here is that if we add the distance of the two swap offsets together, we get a distance which *is* coprime to the number of elements. This means if we can create a subroutine which performs one swap then another in succession, we can use that as a black box swap of the combined distance, and trivially generalise our previous solution using this new swap functionality.
+
+If we set swap `a` between i and j, and swap `b` between m and n, then `k = (n-m) + (j-i)` to be the total swap distance of using both swaps, we can swap any two elements, `A` and `B` by this `k` distance by first swapping `A` with an intermediate swappartner using swap `b`, then swapping `A` and `B` using swap `a`, then swapping the actual `B` with the old intermediate swap partner using swap `b` again on the next rotation. Now `A` and `B` are swapped, and the intermediate partner is back where it was. This also only touches 3 elements, so we can do any other swaps during the same rotation so long as the `(A,B,intermediate)` triples have no overlap.
+
+I monitor this overlap by keeping a dictionary with the "state" of each vegetable, whether it's currently free, waiting for an `a` swap, or waiting for a `b` swap, and only initiate new swap triples when all 3 values are free. This means that when a swap is initiated, none of those three values can be involved in another swap for the next full rotation, but all other elements are free to be included in their own triples.
+
+I then use this subroutine for just implementing `k` offset bubble sort as in Vegetable 4, and it solves it with solutions of the order of ~200k.
+
+Code [here](vegetable/sol5.py), with very ugly networking again :D
+
+The sorting algorithm is as follows
+
+```python
+from socket import socket
+from telnetlib import Telnet
+import string, itertools, hashlib
+import sys
+from collections import deque
+
+def switch(arr, p, q):
+    arr[p], arr[q] = arr[q], arr[p]
+    return arr
+
+def rotate(arr):
+   return arr[1:] + arr[:1]
+
+def rotationsort(arr, p1, p2, q1, q2):
+    n = len(arr)
+    statedict = {}
+    for elem in arr:
+        statedict[elem] = 0
+    k1 = p2 - p1 % n
+    k2 = q2 - q1 % n
+    k3 = k1 + k2
+    solution = ""
+    copiedlist = [elem for elem in arr]
+    copiedlist.sort()
+    permutedlist = []
+    for i in range(n):
+        permutedlist.append(copiedlist[(i*(k3)) % n])
+    permutedvals = {}
+    for j in range(n):
+        permutedvals[permutedlist[j]] = j
+    smallest = copiedlist[0]
+    print("smallest")
+    print(smallest)
+    print(n)
+    solution = ""
+    a, b, c, d = p1, p2, q1, q2
+    swappos = d - k3
+    while True:
+        if (arr[0] == smallest) and (arr == copiedlist):
+            print("returning")
+            return solution
+        elif statedict[arr[b]] == 1 and (statedict[arr[a]] == 6):
+            arr = switch(arr,a,b)
+            solution = solution + "a "
+            statedict[arr[a]] = 0
+            statedict[arr[b]] = 2
+        elif statedict[arr[d]] == 7 and statedict[arr[c]] == 2:
+            solution = solution + "b "
+            arr = switch(arr,c,d)
+            statedict[arr[d]] = 0
+            statedict[arr[c]] = 0
+        elif arr[d] > smallest:
+            if permutedvals[arr[swappos]] > permutedvals[arr[d]]:
+                if (statedict[arr[d]] + statedict[arr[c]] + statedict[arr[swappos]]) == 0:
+                    solution = solution + "b "
+                    arr = switch(arr,c,d) 
+                    statedict[arr[d]] = 7
+                    statedict[arr[c]] = 1
+                    statedict[arr[swappos]] = 6
+        arr = rotate(arr)
+        solution = solution + "c "
+```
