@@ -85,21 +85,3 @@ print(len(solution))
 sock.send(bytes(solution + "\n", "utf-8"))
 chal2 = str(sock.recv(4096))
 print(chal2)
-sys.exit()
-splitstring = "That's correct!! \\xf0\\x9f\\xa5\\xac\\xf0\\x9f\\xa5\\x95\\xf0\\x9f\\x8c\\xbd\\xf0\\x9f\\x8d\\x86\\xf0\\x9f\\xa5\\xa6\\xf0\\x9f\\xa5\\x92\\xf0\\x9f\\xa5\\x91\\xf0\\x9f\\x8d\\x84\\n\\n\\xf0\\x9f\\xa5\\xac\\xf0\\x9f\\xa5\\x95\\xf0\\x9f\\x8c\\xbd\\xf0\\x9f\\x8d\\x86\\xf0\\x9f\\xa5\\xa6\\xf0\\x9f\\xa5\\x92\\xf0\\x9f\\xa5\\x91\\xf0\\x9f\\x8d\\x84 STAGE "
-splitstring2 = " \\xf0\\x9f\\xa5\\xac\\xf0\\x9f\\xa5\\x95\\xf0\\x9f\\x8c\\xbd\\xf0\\x9f\\x8d\\x86\\xf0\\x9f\\xa5\\xa6\\xf0\\x9f\\xa5\\x92\\xf0\\x9f\\xa5\\x91\\xf0\\x9f\\x8d\\x84\\n"
-# print("LINE 22222222222")
-for i in range(2,10):
-    chal1 = str(sock.recv(7000))#.split(splitstring)[-1][:-5] #.split("\\x8d\\x84\\n")[-1].split("\\n\\n")[0]
-    print("received challenge ") # + str(i))
-    print(chal1)
-    ingredients = [x.strip() for x in chal1.split(splitstring + str(i) + splitstring2)[-1][:-5].split(",")] # [3].split("\\n\\n")]
-    print("ingredients are")
-    print("@@@@@@@@@@@@@@@@@@@@@@@@")
-    print(ingredients)
-    print("@@@@@@@@@@@@@@@@@@@@@@@@")
-    solution = sort_by_switch_and_rotate(ingredients).strip()
-    # print("sending " + solution)
-    sock.send(bytes(solution + "\n", "utf-8"))
-# chal2 = str(sock.recv(4096))
-    # print(chal2)
