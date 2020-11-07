@@ -189,12 +189,6 @@ Code [here](vegetable/sol5.py), with very ugly networking again :D
 The sorting algorithm is as follows
 
 ```python
-from socket import socket
-from telnetlib import Telnet
-import string, itertools, hashlib
-import sys
-from collections import deque
-
 def switch(arr, p, q):
     arr[p], arr[q] = arr[q], arr[p]
     return arr
